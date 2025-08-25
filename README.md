@@ -203,3 +203,23 @@ def main():
 if __name__ == "__main__":
     main()
 
+tests/tests.py:
+import unittest
+from src.ad_simulator import ActiveDirectorySimulator, User
+
+class TestADSimulator(unittest.TestCase):
+    def setUp(self):
+        self.ad = ActiveDirectorySimulator('data/test_data.json')
+
+    def test_add_user(self):
+        self.assertTrue(self.ad.add_user('testuser', 'testpass', 'test@example.com'))
+        self.assertIn('testuser', self.ad.users)
+
+    def test_authenticate(self):
+        self.ad.add_user('authuser', 'authpass', 'auth@example.com')
+        self.assertTrue(self.ad.authenticate('authuser', 'authpass'))
+
+if __name__ == '__main__':
+    unittest.main()
+
+data/ad_data.json: Leave empty; the script generates it when you run it.
